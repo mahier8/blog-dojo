@@ -3,6 +3,7 @@ import BlogList from "./BlogList";
 
 const Home = () => {
   const [blogs, setBlogs] = useState(null);
+  const [isPending, setisPending] = useState(true)
 
   // let name = 'mario';
   // const [name, setName] = useState('mario');
@@ -37,6 +38,7 @@ const Home = () => {
       .then(data => {
         console.log(data);
         setBlogs(data);
+        setisPending(false);
       })
   }, []); 
   // dependency array causes the function to only 
@@ -47,6 +49,7 @@ const Home = () => {
         {/* if we have blogs, then we move on to rendering the 
         data from the API, which blogs has been set to, with the 
         setBlogs part of the hook (for line below)*/}
+        {isPending && <div>Loading...</div>} 
         {blogs && <BlogList blogs={blogs} title="Wasssap" />}
         {/* <BlogList blogs={blogs.filter((blog) => blog.author === 'mario')} title="U wot m8" /> */}
         {/* filter through the array and return to me each case whereby the author's name is 'mario' */}
