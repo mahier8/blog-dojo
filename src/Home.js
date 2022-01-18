@@ -4,7 +4,7 @@ import BlogList from "./BlogList";
 const Home = () => {
   const [blogs, setBlogs] = useState(null);
   const [isPending, setisPending] = useState(true)
-
+  const [error, setError] = useState(null)
   // let name = 'mario';
   // const [name, setName] = useState('mario');
   // const [age, setAge] = useState(25);
@@ -33,12 +33,21 @@ const Home = () => {
   useEffect(() => {
     fetch('http://localhost:8000/blogs')
       .then(res => {
+        console.log(res);
+        if (!res.ok) {
+          throw Error('could not fetch data for that resource');
+        }
         return res.json();
-      })
+      }) // have data but no error
       .then(data => {
         console.log(data);
         setBlogs(data);
         setisPending(false);
+        setError(null);
+      }) // no data condition but have error
+      .catch(err => {
+        setisPending(false);
+        setError(err.message);
       })
   }, []); 
   // dependency array causes the function to only 
@@ -46,6 +55,7 @@ const Home = () => {
 
     return (
       <div className="home">
+        {error && <div>{error}</div>}
         {/* if we have blogs, then we move on to rendering the 
         data from the API, which blogs has been set to, with the 
         setBlogs part of the hook (for line below)*/}
