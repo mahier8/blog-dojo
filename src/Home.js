@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import BlogList from "./BlogList";
+import useFetch from "./useFetch";
 
 const Home = () => {
-  const [blogs, setBlogs] = useState(null);
-  const [isPending, setisPending] = useState(true)
-  const [error, setError] = useState(null)
+  const {data: blogs, isPending, error} = useFetch('http://localhost:8000/blogs');
+
+  // before moving it to a new component
+  // const [blogs, setBlogs] = useState(null);
+  // const [isPending, setisPending] = useState(true)
+  // const [error, setError] = useState(null)
+
   // let name = 'mario';
   // const [name, setName] = useState('mario');
   // const [age, setAge] = useState(25);
@@ -27,29 +32,30 @@ const Home = () => {
   //   setBlogs(newBlogs);
   // }
 
+  // moved this out to its own component
   // function runs every time there is a rerender, usually
   //  used to fetch data/communicate with auth system (side effects)
   // any changes in data will therefore fire off the function
-  useEffect(() => {
-    fetch('http://localhost:8000/blogs')
-      .then(res => {
-        console.log(res);
-        if (!res.ok) {
-          throw Error('could not fetch data for that resource');
-        }
-        return res.json();
-      }) // have data but no error
-      .then(data => {
-        console.log(data);
-        setBlogs(data);
-        setisPending(false);
-        setError(null);
-      }) // no data condition but have error
-      .catch(err => {
-        setisPending(false);
-        setError(err.message);
-      })
-  }, []); 
+  // useEffect(() => {
+  //   fetch('http://localhost:8000/blogs')
+  //     .then(res => {
+  //       console.log(res);
+  //       if (!res.ok) {
+  //         throw Error('could not fetch data for that resource');
+  //       }
+  //       return res.json();
+  //     }) // have data but no error
+  //     .then(data => {
+  //       console.log(data);
+  //       setBlogs(data);
+  //       setisPending(false);
+  //       setError(null);
+  //     }) // no data condition but have error
+  //     .catch(err => {
+  //       setisPending(false);
+  //       setError(err.message);
+  //     })
+  // }, []); 
   // dependency array causes the function to only 
   // run after the first initial render
 
