@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 
 const Create = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [author, setAuthor] = useState('mario');
     const [isPending, setisPending] = useState(false)
+    const history = useHistory(); // we can go forward or back in the browsers history
 
 const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +23,8 @@ const handleSubmit = (e) => {
     }).then(() => {
         console.log('new blog added');
         setisPending(false);
+        // history.go(-1); // to go back one step in my browser actions
+        history.push('/'); // this will take us to the homepage
     })
 }
 
