@@ -3,6 +3,7 @@ import Home from './Home';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Create from './Create';
 import BlogDetails from './BlogDetails';
+import NotFound from './NotFound';
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
             </Route>
             <Route path="/blogs/:id">
               <BlogDetails />
+            </Route>
+            {/* the asterisk below means catch any other route */}
+            <Route path="*">
+              <NotFound />
             </Route>
           </Switch>
         </div>
